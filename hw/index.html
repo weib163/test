@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>We Are Happy · 课后练习</title>
+<style>
+@font-face{font-family:Fredoka;font-weight:500;src:url(font/fredoka-500.woff2) format('woff2');font-display:swap}
+@font-face{font-family:Fredoka;font-weight:700;src:url(font/fredoka-700.woff2) format('woff2');font-display:swap}
+:root{--pink:#ef5d8b;--pinkd:#c93a69;--purple:#8e6bbf;--ink:#3b2a44;--cream:#fff7e6;--yellow:#ffd23f;--green:#2fa64a;--line:#f0dfc4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:Fredoka,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",system-ui,sans-serif;font-weight:500;color:var(--ink);background:linear-gradient(#ffe9a8,#ffd97a);overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+#app{max-width:520px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:var(--cream);box-shadow:0 0 40px rgba(120,80,20,.18)}
+header{flex:none;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--purple);color:#fff}
+header .ttl{flex:1;min-width:0;line-height:1.15}
+header .ttl b{display:block;font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header .ttl small{font-size:12px;opacity:.9}
+header img{height:40px}
+#back{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.2);font-size:24px;line-height:1;visibility:hidden}
+#back.on{visibility:visible}
+main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 18px;display:none}
+main.on{display:block}
+h2{font-size:22px;margin:2px 0 4px;font-weight:700}
+p.sub{margin:0 0 12px;font-size:14px;opacity:.8}
+/* home */
+.hello{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.hello img{height:84px}
+.hello b{font-size:24px;font-weight:700;display:block}
+.lcard{display:flex;width:100%;align-items:center;gap:12px;text-align:left;background:#fff;border:3px solid var(--line);border-radius:20px;padding:12px 14px;margin-bottom:12px;box-shadow:0 5px 0 var(--line)}
+.lcard:active{transform:translateY(3px);box-shadow:0 2px 0 var(--line)}
+.lcard .num{flex:none;width:52px;height:52px;border-radius:16px;background:var(--pink);color:#fff;font-size:28px;font-weight:700;display:grid;place-items:center}
+.lcard .tx{flex:1;min-width:0}
+.lcard .tx b{font-size:20px;font-weight:700;display:block}
+.lcard .tx small{font-size:13px;opacity:.8;display:block}
+.stars{display:flex;gap:3px;margin-top:5px}
+.stars i{width:18px;height:18px;border-radius:50%;background:#eadfcc;display:block}
+.stars i.on{background:var(--yellow);box-shadow:inset 0 -2px 0 #d9a400}
+.tipbox{font-size:13px;line-height:1.5;background:#fff3cf;border-radius:14px;padding:10px 12px;margin-top:4px}
+/* steps */
+#steps{flex:none;display:none;gap:6px;padding:8px 10px;background:#fff;border-bottom:2px solid var(--line)}
+#steps.on{display:flex}
+#steps button{flex:1;border-radius:12px;padding:5px 2px 4px;font-size:12px;line-height:1.2;background:#f6efe2;border:2px solid transparent;position:relative}
+#steps button svg{display:block;width:22px;height:22px;margin:0 auto 1px}
+#steps button.cur{background:#ffe3ec;border-color:var(--pink);color:var(--pinkd)}
+#steps button.ok::after{content:"";position:absolute;right:3px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--green)}
+#bar{flex:none;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:2px solid var(--line)}
+#bar.on{display:flex}
+#bar button{height:50px;border-radius:16px;font-size:18px;font-weight:700}
+#prevStep{flex:none;width:92px;background:#f1e7d6}
+#nextStep{flex:1;background:var(--pink);color:#fff;box-shadow:0 4px 0 var(--pinkd)}
+#nextStep:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pinkd)}
+/* book */
+.spread{position:relative;background:#fff;border-radius:16px;border:3px solid #fff;box-shadow:0 5px 0 var(--line);overflow:hidden;aspect-ratio:2/1}
+.spread img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.spread .zoomhint{position:absolute;right:6px;bottom:6px;background:rgba(40,25,50,.6);color:#fff;font-size:11px;border-radius:9px;padding:3px 7px}
+.dots{display:flex;justify-content:center;gap:5px;margin:9px 0 2px;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:#e6d9c1}
+.dots i.on{background:var(--pink);transform:scale(1.25)}
+.ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0 6px}
+.ctl .sm{width:52px;height:52px;border-radius:50%;background:#fff;box-shadow:0 4px 0 var(--line);display:grid;place-items:center}
+.ctl .big{width:76px;height:76px;border-radius:50%;background:var(--pink);box-shadow:0 5px 0 var(--pinkd);display:grid;place-items:center}
+.ctl .big:active,.ctl .sm:active{transform:translateY(2px)}
+.ctl svg{width:26px;height:26px;fill:var(--ink)}
+.ctl .big svg{width:34px;height:34px;fill:#fff}
+.prog{height:8px;border-radius:5px;background:#eadfcc;overflow:hidden;margin:4px 6px 0}
+.prog b{display:block;height:100%;width:0;background:var(--pink)}
+.modes{display:flex;gap:8px;margin:0 0 10px}
+.modes button{flex:1;height:42px;border-radius:14px;background:#fff;border:2px solid var(--line);font-size:16px;font-weight:700}
+.modes button.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.note{font-size:13px;line-height:1.5;opacity:.85;margin:10px 2px 0}
+/* say */
+.say{background:#fff;border-radius:18px;border:3px solid var(--line);padding:12px 12px 10px;margin-bottom:12px}
+.say .en{font-size:22px;font-weight:700;line-height:1.25;margin-bottom:10px}
+.say .row{display:flex;gap:8px}
+.say .row button{flex:1;height:48px;border-radius:14px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;background:#f6efe2}
+.say .row svg{width:22px;height:22px;fill:currentColor}
+.say .b-hear{background:#e9defa;color:#5b3d91}
+.say .b-rec{background:#ffe3ec;color:var(--pinkd)}
+.say .b-rec.rec{background:var(--pink);color:#fff;animation:pulse 1s ease-in-out infinite}
+.say .row .b-mine{background:#dff3e2;color:#1f7a37;display:none}
+.say.has .row .b-mine{display:flex}
+.say.done{border-color:#bfe5c6}
+.say .b-rec.ok{background:#dff3e2;color:#1f7a37}
+@keyframes pulse{50%{transform:scale(1.04)}}
+/* tasks */
+.task{display:flex;width:100%;text-align:left;gap:12px;align-items:flex-start;background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px;font-size:16px;line-height:1.5}
+.task .box{flex:none;width:34px;height:34px;border-radius:11px;border:3px solid #d8c7a8;display:grid;place-items:center;margin-top:1px}
+.task .box svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.task.on{border-color:#bfe5c6;background:#f3fbf4}
+.task.on .box{background:var(--green);border-color:var(--green)}
+/* done */
+.fin{text-align:center}
+.fin img{height:130px;margin-top:4px}
+.fin h2{font-size:26px}
+.sum{text-align:left;background:#fff;border-radius:18px;border:3px solid var(--line);padding:6px 12px;margin:10px 0}
+.sum div{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:2px dashed var(--line);font-size:16px}
+.sum div:last-child{border:0}
+.sum i{flex:none;width:24px;height:24px;border-radius:50%;background:#eadfcc}
+.sum i.on{background:var(--yellow);box-shadow:inset 0 -3px 0 #d9a400}
+.sum button{margin-left:auto;font-size:14px;color:var(--pinkd);font-weight:700;padding:4px 8px}
+/* zoom */
+#zoom{position:fixed;inset:0;background:#1c1322;display:none;z-index:20}
+#zoom.on{display:block}
+#zoom img{position:absolute;left:50%;top:50%;background:#fff}
+#zoom span{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);color:#fff;font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:10px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="app">
+  <header><button id="back" aria-label="返回">‹</button><div class="ttl"><b id="hTitle"></b><small id="hSub">课后练习</small></div><img src="img/lulu_happy.svg" alt=""></header>
+  <nav id="steps"></nav>
+  <main id="home"></main>
+  <main id="s-story"></main>
+  <main id="s-song"></main>
+  <main id="s-say"></main>
+  <main id="s-task"></main>
+  <main id="s-done"></main>
+  <footer id="bar"><button id="prevStep">上一步</button><button id="nextStep">下一步</button></footer>
+</div>
+<div id="zoom"><img alt=""><span>点一下回去</span></div>
+<script>
+'use strict';
+const D = {"u": 1, "title": "We Are Happy", "storyName": "We Are Happy", "g": "audio/g_", "lessons": [{"zh": "故事 · 儿歌 · 动作", "hw": ["听绘本音频，跟唱 If you’re happy and you know it。", "边说边做 4 个动作：clap / stomp / turn around / shout “Hurray!”", "录一段边唱边做动作的小视频发到班级群。"], "say": [{"t": "If you’re happy and you know it, clap your hands.", "a": "audio/s_0_0.mp3"}, {"t": "Stomp your feet.", "a": "audio/s_0_1.mp3"}, {"t": "Turn around.", "a": "audio/s_0_2.mp3"}, {"t": "Shout hurray!", "a": "audio/s_0_3.mp3"}]}, {"zh": "礼物对话 · 四种情绪", "hw": ["每天问一次 How do you feel today? 用 I feel happy / sad / angry / scared 回答。", "唱 Are you happy? Yes, I am.（两只老虎的调子）", "和家人玩礼物对话：This is for you. – Thank you. I like it."], "say": [{"t": "How do you feel today?", "a": "audio/s_1_0.mp3"}, {"t": "I feel happy.", "a": "audio/s_1_1.mp3"}, {"t": "This is for you.", "a": "audio/s_1_2.mp3"}, {"t": "Thank you. I like it.", "a": "audio/s_1_3.mp3"}]}, {"zh": "作业纸 3–4 · 安静书 · 手工", "hw": ["转一转表情纸杯，说 I’m happy / sad / angry / scared today.", "把 4 张作业纸讲给家人听：Who is happy? Who is sad?", "翻安静书找影子：The girl feels happy. I clap my hands."], "say": [{"t": "I’m happy today.", "a": "audio/s_2_0.mp3"}, {"t": "Who is happy?", "a": "audio/s_2_1.mp3"}, {"t": "The girl feels happy.", "a": "audio/s_2_2.mp3"}, {"t": "I clap my hands.", "a": "audio/s_2_3.mp3"}]}], "story": {"audio": "audio/story.mp3", "pages": [["img/book0.webp", [6.5, 16.4]], ["img/book2.webp", [19.8, 28.4]], ["img/book3.webp", [29.8, 36.9]], ["img/book4.webp", [42.8, 53.0]], ["img/book5.webp", [54.3, 63.0]], ["img/book6.webp", [68.7, 79.7]], ["img/book7.webp", [81.3, 91.2]], ["img/book8.webp", [91.7, 104.4]], ["img/book9.webp", [105.1, 118.5]]]}, "song": {"read": "audio/read.mp3", "song": "audio/song.mp3", "pages": [["img/sb0.webp", [1.0, 4.6]], ["img/sb1.webp", [8.0, 14.8]], ["img/sb2.webp", [14.8, 21.4]], ["img/sb3.webp", [24.7, 31.1]], ["img/sb4.webp", [31.2, 38.0]], ["img/sb5.webp", [41.3, 48.0]], ["img/sb6.webp", [48.2, 54.9]], ["img/sb7.webp", [58.1, 65.4]], ["img/sb8.webp", [65.3, 72.5]], ["img/sb9.webp", null]]}};
+const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => [...(r || document).querySelectorAll(s)];
+const Q = new URLSearchParams(location.search);
+const NAME = (Q.get('name') || '').trim().slice(0, 20);
+const SK = 'rr-hw-v1:u' + D.u + ':' + (Q.get('key') || 'preview');
+const IC = {
+  play: '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',
+  prev: '<svg viewBox="0 0 24 24"><path d="M16 4L6 12l10 8z"/></svg>', next: '<svg viewBox="0 0 24 24"><path d="M8 4l10 8-10 8z"/></svg>',
+  ear: '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM15.5 8.5a5 5 0 010 7l1.4 1.4a7 7 0 000-9.8z"/></svg>',
+  mic: '<svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 003.5-3.5v-5a3.5 3.5 0 00-7 0v5A3.5 3.5 0 0012 15zm6-3.5a6 6 0 01-12 0H4.5a7.5 7.5 0 006.5 7.4V22h2v-3.1a7.5 7.5 0 006.5-7.4z"/></svg>',
+  stop: '<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>', check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5.5C6.5 4.6 9 4.8 11 6v13c-2-1.2-4.5-1.4-7-.5zM20 5.5c-2.5-.9-5-.7-7 .5v13c2-1.2 4.5-1.4 7-.5z"/></svg>',
+  note: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4v10.2A3.2 3.2 0 1011 17V8h6V4z"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l9 8h-2.5v9h-5v-6h-3v6h-5v-9H3z"/></svg>'
+};
+const STEPS = [['story', '听故事', IC.book], ['song', '唱儿歌', IC.note], ['say', '跟我说', IC.mic.replace('<svg', '<svg fill="currentColor"')], ['task', '亲子任务', IC.home]];
+const blank = () => ({ story: 0, song: 0, heard: [0, 0, 0, 0], said: [0, 0, 0, 0], tasks: [0, 0, 0] });
+let S = { lesson: -1, L: [blank(), blank(), blank()] };
+try { const o = JSON.parse(localStorage.getItem(SK) || 'null'); if (o && o.L && o.L.length === 3) S = o; } catch (e) {}
+const save = () => { try { localStorage.setItem(SK, JSON.stringify(S)); } catch (e) {} };
+const T0 = Date.now();
+let view = 'home', mic = null, micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder), recs = {}, sentDone = false;
+const cur = () => S.L[S.lesson];
+const sayDone = l => l.said.every(x => x);
+const stepOK = (l, k) => k === 'story' ? l.story === 2 : k === 'song' ? l.song === 2 : k === 'say' ? sayDone(l) : l.tasks.every(x => x);
+const count = l => STEPS.filter(s => stepOK(l, s[0])).length;
+
+/* ---- audio: one voice player for prompts and sentences, one media player for books ---- */
+const voice = new Audio(), media = new Audio(); let book = null;
+function say(src, onend) { media.pause(); voice.pause(); voice.onended = onend || null; voice.src = src; voice.play().catch(() => {}); }
+const prompt = i => say(D.g + i + '.mp3');
+function quiet() { voice.pause(); media.pause(); stopRec(); }
+
+/* ---- picture book player ---- */
+function Book(root, pages, opts) {
+  let pi = 0, src = '', timed = true;
+  root.innerHTML = (opts.modes ? `<div class="modes">${opts.modes.map((m, i) => `<button data-m="${i}" class="${i ? '' : 'on'}">${m.label}</button>`).join('')}</div>` : '') +
+    `<div class="spread"><img alt=""><span class="zoomhint">点图片放大</span></div><div class="dots">${pages.map(() => '<i></i>').join('')}</div>
+     <div class="ctl"><button class="sm b-prev" aria-label="上一页">${IC.prev}</button><button class="big b-play" aria-label="播放">${IC.play}</button><button class="sm b-next" aria-label="下一页">${IC.next}</button></div>
+     <div class="prog"><b></b></div>`;
+  const img = $('.spread img', root), bp = $('.b-play', root), bar = $('.prog b', root);
+  const show = i => { pi = Math.max(0, Math.min(pages.length - 1, i)); img.src = pages[pi][0]; $$('.dots i', root).forEach((d, n) => d.classList.toggle('on', n === pi)); };
+  const setSrc = (s, t) => { src = s; timed = t; if (book === api) { media.pause(); media.src = s; bar.style.width = '0'; bp.innerHTML = IC.play; } };
+  const api = {
+    time() { if (!media.duration) return; bar.style.width = (media.currentTime / media.duration * 100) + '%'; if (media.currentTime > 4) opts.mark(1);
+      if (timed) { let k = pi; pages.forEach((p, n) => { if (p[1] && media.currentTime >= p[1][0] - .15) k = n; }); if (k !== pi) show(k); } },
+    ended() { bp.innerHTML = IC.play; opts.mark(2); }, playing(on) { bp.innerHTML = on ? IC.pause : IC.play; },
+    enter() { book = api; media.pause(); media.src = src; bar.style.width = '0'; bp.innerHTML = IC.play; show(0); }
+  };
+  bp.onclick = () => { voice.pause(); if (media.paused) media.play().catch(() => {}); else media.pause(); };
+  const turn = d => { show(pi + d); if (timed && pages[pi][1] && media.src) { try { media.currentTime = pages[pi][1][0]; } catch (e) {} } };
+  $('.b-prev', root).onclick = () => turn(-1); $('.b-next', root).onclick = () => turn(1);
+  $('.spread', root).onclick = () => zoom(img.src);
+  if (opts.modes) $$('.modes button', root).forEach(b => b.onclick = () => { $$('.modes button', root).forEach(x => x.classList.toggle('on', x === b)); const m = opts.modes[+b.dataset.m]; setSrc(m.src, m.timed); show(0); });
+  setSrc(opts.modes ? opts.modes[0].src : opts.src, true);
+  return api;
+}
+media.addEventListener('timeupdate', () => book && book.time());
+media.addEventListener('ended', () => book && book.ended());
+media.addEventListener('play', () => book && book.playing(true));
+media.addEventListener('pause', () => book && book.playing(false));
+
+/* ---- zoom: the spread fills the phone by lying on its side ---- */
+function zoom(src) {
+  const z = $('#zoom'), im = $('img', z); im.src = src;
+  const fit = () => { const W = innerWidth, H = innerHeight, r = (im.naturalWidth || 2) / (im.naturalHeight || 1), rot = H > W && r > 1.1;
+    const bw = rot ? H : W, bh = rot ? W : H, w = Math.min(bw, bh * r); im.style.width = w + 'px'; im.style.height = (w / r) + 'px';
+    im.style.transform = 'translate(-50%,-50%)' + (rot ? ' rotate(90deg)' : ''); };
+  im.onload = fit; fit(); z.classList.add('on');
+}
+$('#zoom').onclick = () => $('#zoom').classList.remove('on');
+
+/* ---- recording ---- */
+let recorder = null, recIdx = -1, recTimer = 0;
+function stopRec() { clearTimeout(recTimer); if (recorder && recorder.state !== 'inactive') { try { recorder.stop(); } catch (e) {} if (recIdx >= 0 && view === 'say') { recIdx = -1; paintSay(); } } }
+async function startRec(i) {
+  quiet();
+  try {
+    if (!mic) mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const chunks = []; recorder = new MediaRecorder(mic); recIdx = i;
+    recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    recorder.onstop = () => { const k = S.lesson + ':' + i; if (recs[k]) URL.revokeObjectURL(recs[k]); recs[k] = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
+      cur().said[i] = 1; save(); recIdx = -1; if (view === 'say') { paintSay(); prompt(5 + i % 3); } after(); };
+    recorder.start(); recTimer = setTimeout(stopRec, 8000); if (view === 'say') paintSay();
+  } catch (e) { micOK = false; mic = null; paintSay(); }
+}
+
+/* ---- views ---- */
+function go(v) {
+  quiet(); view = v; $$('main').forEach(m => m.classList.toggle('on', m.id === (v === 'home' ? 'home' : 's-' + v)));
+  const inL = v !== 'home'; $('#steps').classList.toggle('on', inL); $('#bar').classList.toggle('on', inL); $('#back').classList.toggle('on', inL);
+  $('#hSub').textContent = inL ? 'Lesson ' + (S.lesson + 1) + ' · 课后练习' : '课后练习';
+  if (v === 'home') paintHome(); else { paintSteps(); $('#nextStep').textContent = v === 'done' ? '回到首页' : v === 'task' ? '做完啦' : '下一步'; $('#prevStep').style.visibility = v === 'story' ? 'hidden' : 'visible'; $('main.on').scrollTop = 0; }
+  if (v === 'story') { bookStory.enter(); prompt(1); }
+  if (v === 'song') { bookSong.enter(); prompt(2); }
+  if (v === 'say') { paintSay(); prompt(3); }
+  if (v === 'task') { paintTask(); prompt(8); }
+  if (v === 'done') { paintDone(); if (count(cur()) === 4) prompt(9); }
+}
+function paintHome() {
+  $('#home').innerHTML = `<div class="hello"><img src="img/lulu_hooray.svg" alt=""><div><b>${NAME ? 'Hi, ' + esc(NAME) + '!' : 'Hi!'}</b>今天上的是哪一节课？点一下开始。</div></div>` +
+    D.lessons.map((L, i) => `<button class="lcard" data-l="${i}"><span class="num">${i + 1}</span><span class="tx"><b>Lesson ${i + 1}</b><small>${esc(L.zh)}</small><span class="stars">${STEPS.map(s => `<i class="${stepOK(S.L[i], s[0]) ? 'on' : ''}"></i>`).join('')}</span></span></button>`).join('') +
+    `<div class="tipbox">给家长：每次练习大约十分钟，分四步：听故事、唱儿歌、跟我说、亲子任务。请陪孩子一起做，做完后点练习框外面的「完成，交给老师」按钮（手机上在练习框下面）。</div>`;
+  $$('#home .lcard').forEach(b => b.onclick = () => { S.lesson = +b.dataset.l; save(); const first = STEPS.find(s => !stepOK(cur(), s[0])); go(first ? first[0] : 'done'); if (first && first[0] === 'story') prompt(0); });
+}
+function paintSteps() { $('#steps').innerHTML = STEPS.map(s => `<button data-s="${s[0]}" class="${view === s[0] ? 'cur' : ''}${stepOK(cur(), s[0]) ? ' ok' : ''}">${s[2]}${s[1]}</button>`).join(''); $$('#steps button').forEach(b => b.onclick = () => go(b.dataset.s)); }
+function paintSay() {
+  const l = cur(), L = D.lessons[S.lesson];
+  $('#s-say').innerHTML = `<h2>Say it with me</h2><p class="sub">先点“听一听”，再${micOK ? '点“我来说”录下自己的声音' : '大声说一遍，说完点“我说了”'}。</p>` + L.say.map((s, i) => {
+    const has = recs[S.lesson + ':' + i], rec = recIdx === i;
+    return `<div class="say${has ? ' has' : ''}${l.said[i] ? ' done' : ''}"><div class="en">${esc(s.t)}</div><div class="row"><button class="b-hear" data-i="${i}">${IC.ear}听一听</button>` +
+      (micOK ? `<button class="b-rec${rec ? ' rec' : ''}" data-i="${i}">${rec ? IC.stop + '说完了' : IC.mic + (l.said[i] ? '再说一次' : '我来说')}</button><button class="b-mine" data-i="${i}">${IC.play}我的声音</button>`
+             : `<button class="b-rec${l.said[i] ? ' ok' : ''}" data-i="${i}">${l.said[i] ? '说过了' : '我说了'}</button>`) + `</div></div>`; }).join('') +
+    (micOK ? `<p class="note">录音只留在这台手机上，方便孩子听听自己的声音，不会上传。</p>` : `<p class="note">这台手机现在不能录音，听完大声跟读就可以。</p>`);
+  $$('#s-say .b-hear').forEach(b => b.onclick = () => { stopRec(); const i = +b.dataset.i; cur().heard[i] = 1; save(); say(L.say[i].a); });
+  $$('#s-say .b-rec').forEach(b => b.onclick = () => { const i = +b.dataset.i; if (!micOK) { cur().said[i] = cur().said[i] ? 0 : 1; save(); paintSay(); paintSteps(); after(); return; } if (recIdx === i) stopRec(); else startRec(i); });
+  $$('#s-say .b-mine').forEach(b => b.onclick = () => { stopRec(); say(recs[S.lesson + ':' + b.dataset.i]); });
+  paintSteps();
+}
+function paintTask() {
+  const l = cur(), L = D.lessons[S.lesson];
+  $('#s-task').innerHTML = `<h2>With my family</h2><p class="sub">和爸爸妈妈一起做，做完一项就点一下。</p>` + L.hw.map((h, i) => `<button class="task${l.tasks[i] ? ' on' : ''}" data-i="${i}"><span class="box">${IC.check}</span><span>${esc(h)}</span></button>`).join('');
+  $$('#s-task .task').forEach(b => b.onclick = () => { const i = +b.dataset.i; l.tasks[i] = l.tasks[i] ? 0 : 1; save(); paintTask(); paintSteps(); after(); });
+}
+function paintDone() {
+  const l = cur(), all = count(l) === 4;
+  $('#s-done').innerHTML = `<div class="fin"><img src="img/lulu_hooray.svg" alt=""><h2>${all ? 'Well done!' : 'Good try!'}</h2><p class="sub">${all ? '今天的四个练习都做完了。' : '还有没做完的练习，可以现在补上，也可以先交。'}</p>
+    <div class="sum">${STEPS.map(s => `<div><i class="${stepOK(l, s[0]) ? 'on' : ''}"></i>${s[1]}${stepOK(l, s[0]) ? '' : `<button data-s="${s[0]}">去完成</button>`}</div>`).join('')}</div>
+    <div class="tipbox">交作业：点练习框外面的「完成，交给老师」按钮（手机上往下滑就能看到），老师就能看到今天做了什么。</div></div>`;
+  $$('#s-done .sum button').forEach(b => b.onclick = () => go(b.dataset.s));
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const mark = k => v => { const l = cur(); if (l && l[k] < v) { l[k] = v; save(); paintSteps(); after(); } };
+const bookStory = Book($('#s-story'), D.story.pages, { src: D.story.audio, mark: mark('story') });
+$('#s-story').insertAdjacentHTML('afterbegin', `<h2>${esc(D.storyName)}</h2><p class="sub">点粉色按钮听故事，图片会自己翻页。</p>`);
+const bookSong = Book($('#s-song'), D.song.pages, { modes: [{ label: '慢慢读', src: D.song.read, timed: true }, { label: '跟着唱', src: D.song.song, timed: false }], mark: mark('song') });
+$('#s-song').insertAdjacentHTML('afterbegin', `<h2>${esc(D.title)}</h2><p class="sub">先“慢慢读”一遍，再“跟着唱”，边唱边做动作。唱的时候用两边的按钮翻页。</p>`);
+$('#hTitle').textContent = D.title;
+$('#back').onclick = () => go('home');
+const ORDER = ['story', 'song', 'say', 'task', 'done'];
+$('#nextStep').onclick = () => { const i = ORDER.indexOf(view); go(i === 4 ? 'home' : ORDER[i + 1]); };
+$('#prevStep').onclick = () => { const i = ORDER.indexOf(view); if (i > 0) go(ORDER[i - 1]); };
+
+/* ---- Wonder English: hand the work back to the teacher ---- */
+function describe(i) {
+  const l = S.L[i], L = D.lessons[i], st = ['还没听', '听了一部分', '听完了'];
+  const said = L.say.filter((s, n) => l.said[n]).map(s => s.t), tasks = L.hw.filter((h, n) => l.tasks[n]);
+  return [`Lesson ${i + 1}（${L.zh}）`, `听故事《${D.storyName}》：${st[l.story]}`, `唱儿歌 ${D.title}：${st[l.song]}`,
+    said.length ? `跟我说，跟读了这些句子：${said.join(' / ')}` : '跟我说：还没跟读', tasks.length ? '亲子任务，做了：\n' + tasks.map(t => '  · ' + t).join('\n') : '亲子任务：还没做'].join('\n');
+}
+function collect() {
+  const used = [0, 1, 2].filter(i => i === S.lesson || count(S.L[i]) || S.L[i].story || S.L[i].song || S.L[i].said.some(x => x) || S.L[i].tasks.some(x => x));
+  if (S.lesson < 0) return { text: `彩虹兔童谣课后练习 · ${D.title}\n还没有开始练习。`, missing: ['还没有选今天上的是哪一节课'] };
+  const l = cur(), missing = [];
+  if (l.story < 2) missing.push('故事还没听完'); if (l.song < 2) missing.push('儿歌还没唱完'); if (!sayDone(l)) missing.push('还有句子没跟读'); if (!l.tasks.every(x => x)) missing.push('亲子任务还没勾完');
+  return { text: (`彩虹兔童谣课后练习 · ${D.title}\n` + used.map(describe).join('\n\n')).slice(0, 19000), missing };
+}
+function after() {
+  if (S.lesson >= 0 && count(cur()) === 4 && !sentDone) { sentDone = true; try { parent.postMessage({ type: 'we:complete', summary: `Lesson ${S.lesson + 1} 的四个练习都做完了` }, location.origin); } catch (e) {} }
+  try { if (parent !== window) parent.postMessage({ type: 'we:progress', page: S.lesson < 0 ? 0 : count(cur()), total: 4, seconds: Math.round((Date.now() - T0) / 1000), words: [] }, location.origin); } catch (e) {}
+}
+window.weActivity = { collect, show() { if (S.lesson < 0) return go('home'); const first = STEPS.find(s => !stepOK(cur(), s[0])); go(first ? first[0] : 'done'); } };
+addEventListener('pagehide', () => { quiet(); if (mic) mic.getTracks().forEach(t => t.stop()); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) quiet(); });
+go('home');
+</script>
+</body>
+</html>
