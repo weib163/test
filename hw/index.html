@@ -12,6 +12,7 @@
 html,body{margin:0;height:100%}
 body{font-family:Fredoka,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",system-ui,sans-serif;font-weight:500;color:var(--ink);background:linear-gradient(#ffe9a8,#ffd97a);overflow:hidden}
 button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+.emo{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1}
 #app{max-width:520px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:var(--cream);box-shadow:0 0 40px rgba(120,80,20,.18)}
 header{flex:none;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--purple);color:#fff}
 header .ttl{flex:1;min-width:0;line-height:1.15}
@@ -22,7 +23,7 @@ header img{height:40px}
 #back.on{visibility:visible}
 main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 18px;display:none}
 main.on{display:block}
-h2{font-size:22px;margin:2px 0 4px;font-weight:700}
+h2{font-size:24px;margin:2px 0 4px;font-weight:700}
 p.sub{margin:0 0 12px;font-size:14px;opacity:.8}
 /* home */
 .hello{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -30,81 +31,100 @@ p.sub{margin:0 0 12px;font-size:14px;opacity:.8}
 .hello b{font-size:24px;font-weight:700;display:block}
 .lcard{display:flex;width:100%;align-items:center;gap:12px;text-align:left;background:#fff;border:3px solid var(--line);border-radius:20px;padding:12px 14px;margin-bottom:12px;box-shadow:0 5px 0 var(--line)}
 .lcard:active{transform:translateY(3px);box-shadow:0 2px 0 var(--line)}
-.lcard .num{flex:none;width:52px;height:52px;border-radius:16px;background:var(--pink);color:#fff;font-size:28px;font-weight:700;display:grid;place-items:center}
+.lcard .num{flex:none;width:56px;height:56px;border-radius:16px;background:var(--pink);color:#fff;font-size:30px;font-weight:700;display:grid;place-items:center}
 .lcard .tx{flex:1;min-width:0}
 .lcard .tx b{font-size:20px;font-weight:700;display:block}
-.lcard .tx small{font-size:13px;opacity:.8;display:block}
-.stars{display:flex;gap:3px;margin-top:5px}
+.lcard .tx .emo{font-size:24px;letter-spacing:4px;display:block;margin:3px 0 4px}
+.stars{display:flex;gap:4px}
 .stars i{width:18px;height:18px;border-radius:50%;background:#eadfcc;display:block}
 .stars i.on{background:var(--yellow);box-shadow:inset 0 -2px 0 #d9a400}
+.bonus{display:flex;width:100%;align-items:center;gap:10px;text-align:left;background:#efe7fa;border-radius:16px;padding:10px 12px;margin-bottom:12px;font-size:15px}
+.bonus .emo{font-size:26px}
 .tipbox{font-size:13px;line-height:1.5;background:#fff3cf;border-radius:14px;padding:10px 12px;margin-top:4px}
 /* steps */
 #steps{flex:none;display:none;gap:6px;padding:8px 10px;background:#fff;border-bottom:2px solid var(--line)}
 #steps.on{display:flex}
-#steps button{flex:1;border-radius:12px;padding:5px 2px 4px;font-size:12px;line-height:1.2;background:#f6efe2;border:2px solid transparent;position:relative}
-#steps button svg{display:block;width:22px;height:22px;margin:0 auto 1px}
+#steps button{flex:1;border-radius:12px;padding:4px 2px;font-size:13px;line-height:1.25;background:#f6efe2;border:2px solid transparent;position:relative}
+#steps button .emo{display:block;font-size:22px;margin-bottom:1px}
 #steps button.cur{background:#ffe3ec;border-color:var(--pink);color:var(--pinkd)}
-#steps button.ok::after{content:"";position:absolute;right:3px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--green)}
+#steps button.ok::after{content:"";position:absolute;right:4px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--green)}
 #bar{flex:none;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:2px solid var(--line)}
 #bar.on{display:flex}
-#bar button{height:50px;border-radius:16px;font-size:18px;font-weight:700}
+#bar button{height:52px;border-radius:16px;font-size:18px;font-weight:700}
 #prevStep{flex:none;width:92px;background:#f1e7d6}
 #nextStep{flex:1;background:var(--pink);color:#fff;box-shadow:0 4px 0 var(--pinkd)}
 #nextStep:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pinkd)}
-/* book */
+/* video */
+.vbox{position:relative;background:#000;border-radius:16px;overflow:hidden;box-shadow:0 5px 0 var(--line);aspect-ratio:16/10}
+.vbox video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.vbox .vplay{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--pink);box-shadow:0 5px 0 var(--pinkd);display:grid;place-items:center}
+.vbox .vplay svg{width:38px;height:38px;fill:#fff;margin-left:4px}
+.vbox.playing .vplay{display:none}
+.vbox .vbig{position:absolute;right:8px;bottom:8px;background:rgba(40,25,50,.6);color:#fff;font-size:12px;border-radius:9px;padding:5px 9px}
+.vbox.full{position:fixed;z-index:30;border-radius:0;box-shadow:none;aspect-ratio:auto;left:50%;top:50%}
+.prog{height:10px;border-radius:6px;background:#eadfcc;overflow:hidden;margin:12px 4px 0}
+.prog b{display:block;height:100%;width:0;background:var(--pink)}
+.speed{display:flex;align-items:center;gap:8px;margin:14px 0 0}
+.speed span{font-size:14px;opacity:.8;flex:none}
+.speed button{flex:1;height:48px;border-radius:14px;background:#fff;border:3px solid var(--line);font-size:18px;font-weight:700}
+.speed button.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.speed button small{display:block;font-size:11px;font-weight:500;opacity:.85;margin-top:-2px}
+.note{font-size:13px;line-height:1.5;opacity:.85;margin:12px 2px 0}
+/* words */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wcard{position:relative;background:#fff;border:3px solid var(--line);border-radius:22px;padding:10px 6px 12px;box-shadow:0 5px 0 var(--line);text-align:center}
+.wcard:active{transform:translateY(3px);box-shadow:0 2px 0 var(--line)}
+.wcard .pic{height:92px;display:grid;place-items:center;font-size:72px}
+.wcard b{display:block;font-size:26px;font-weight:700}
+.wcard.heard{border-color:#ffd23f;box-shadow:0 5px 0 #e9bf2f}
+.wcard.heard::after{content:"★";position:absolute;right:8px;top:4px;color:#f2b600;font-size:22px}
+.wcard.say{animation:pop .5s ease}
+@keyframes pop{40%{transform:scale(1.07)}}
+/* game */
+.ask{display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0 14px}
+.ask button{width:92px;height:92px;border-radius:50%;background:var(--purple);box-shadow:0 6px 0 #6d4d9c;display:grid;place-items:center}
+.ask button:active{transform:translateY(3px);box-shadow:0 3px 0 #6d4d9c}
+.ask svg{width:46px;height:46px;fill:#fff}
+.rounds{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+.rounds i{width:16px;height:16px;border-radius:50%;background:#e6d9c1}
+.rounds i.on{background:var(--yellow);box-shadow:inset 0 -2px 0 #d9a400}
+.choices{display:grid;gap:12px}
+.choices.n2{grid-template-columns:1fr 1fr}
+.choices.n3{grid-template-columns:1fr 1fr 1fr}
+.pick{background:#fff;border:4px solid var(--line);border-radius:24px;box-shadow:0 6px 0 var(--line);height:150px;display:grid;place-items:center;font-size:84px}
+.choices.n3 .pick{font-size:64px;height:128px}
+.pick.yes{border-color:var(--green);background:#eafaee;animation:pop .5s ease}
+.pick.no{animation:shake .4s ease}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.cheer{text-align:center;font-size:54px;height:64px;margin-top:10px}
+/* done */
+.fin{text-align:center}
+.fin img{height:130px;margin-top:4px}
+.fin h2{font-size:28px}
+.sum{text-align:left;background:#fff;border-radius:18px;border:3px solid var(--line);padding:6px 12px;margin:10px 0}
+.sum div{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:2px dashed var(--line);font-size:17px}
+.sum div:last-child{border:0}
+.sum i{flex:none;width:24px;height:24px;border-radius:50%;background:#eadfcc}
+.sum i.on{background:var(--yellow);box-shadow:inset 0 -3px 0 #d9a400}
+.sum button{margin-left:auto;font-size:14px;color:var(--pinkd);font-weight:700;padding:4px 8px}
+/* story (bonus) */
 .spread{position:relative;background:#fff;border-radius:16px;border:3px solid #fff;box-shadow:0 5px 0 var(--line);overflow:hidden;aspect-ratio:2/1}
 .spread img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
 .spread .zoomhint{position:absolute;right:6px;bottom:6px;background:rgba(40,25,50,.6);color:#fff;font-size:11px;border-radius:9px;padding:3px 7px}
 .dots{display:flex;justify-content:center;gap:5px;margin:9px 0 2px;flex-wrap:wrap}
 .dots i{width:9px;height:9px;border-radius:50%;background:#e6d9c1}
 .dots i.on{background:var(--pink);transform:scale(1.25)}
-.ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0 6px}
+.ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0 2px}
 .ctl .sm{width:52px;height:52px;border-radius:50%;background:#fff;box-shadow:0 4px 0 var(--line);display:grid;place-items:center}
 .ctl .big{width:76px;height:76px;border-radius:50%;background:var(--pink);box-shadow:0 5px 0 var(--pinkd);display:grid;place-items:center}
-.ctl .big:active,.ctl .sm:active{transform:translateY(2px)}
 .ctl svg{width:26px;height:26px;fill:var(--ink)}
 .ctl .big svg{width:34px;height:34px;fill:#fff}
-.prog{height:8px;border-radius:5px;background:#eadfcc;overflow:hidden;margin:4px 6px 0}
-.prog b{display:block;height:100%;width:0;background:var(--pink)}
-.modes{display:flex;gap:8px;margin:0 0 10px}
-.modes button{flex:1;height:42px;border-radius:14px;background:#fff;border:2px solid var(--line);font-size:16px;font-weight:700}
-.modes button.on{background:var(--purple);border-color:var(--purple);color:#fff}
-.note{font-size:13px;line-height:1.5;opacity:.85;margin:10px 2px 0}
-/* say */
-.say{background:#fff;border-radius:18px;border:3px solid var(--line);padding:12px 12px 10px;margin-bottom:12px}
-.say .en{font-size:22px;font-weight:700;line-height:1.25;margin-bottom:10px}
-.say .row{display:flex;gap:8px}
-.say .row button{flex:1;height:48px;border-radius:14px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;background:#f6efe2}
-.say .row svg{width:22px;height:22px;fill:currentColor}
-.say .b-hear{background:#e9defa;color:#5b3d91}
-.say .b-rec{background:#ffe3ec;color:var(--pinkd)}
-.say .b-rec.rec{background:var(--pink);color:#fff;animation:pulse 1s ease-in-out infinite}
-.say .row .b-mine{background:#dff3e2;color:#1f7a37;display:none}
-.say.has .row .b-mine{display:flex}
-.say.done{border-color:#bfe5c6}
-.say .b-rec.ok{background:#dff3e2;color:#1f7a37}
-@keyframes pulse{50%{transform:scale(1.04)}}
-/* tasks */
-.task{display:flex;width:100%;text-align:left;gap:12px;align-items:flex-start;background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px;font-size:16px;line-height:1.5}
-.task .box{flex:none;width:34px;height:34px;border-radius:11px;border:3px solid #d8c7a8;display:grid;place-items:center;margin-top:1px}
-.task .box svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.task.on{border-color:#bfe5c6;background:#f3fbf4}
-.task.on .box{background:var(--green);border-color:var(--green)}
-/* done */
-.fin{text-align:center}
-.fin img{height:130px;margin-top:4px}
-.fin h2{font-size:26px}
-.sum{text-align:left;background:#fff;border-radius:18px;border:3px solid var(--line);padding:6px 12px;margin:10px 0}
-.sum div{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:2px dashed var(--line);font-size:16px}
-.sum div:last-child{border:0}
-.sum i{flex:none;width:24px;height:24px;border-radius:50%;background:#eadfcc}
-.sum i.on{background:var(--yellow);box-shadow:inset 0 -3px 0 #d9a400}
-.sum button{margin-left:auto;font-size:14px;color:var(--pinkd);font-weight:700;padding:4px 8px}
-/* zoom */
 #zoom{position:fixed;inset:0;background:#1c1322;display:none;z-index:20}
 #zoom.on{display:block}
 #zoom img{position:absolute;left:50%;top:50%;background:#fff}
-#zoom span{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);color:#fff;font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:10px;white-space:nowrap}
+#zoom span,#veil span{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);color:#fff;font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:10px;white-space:nowrap}
+#veil{position:fixed;inset:0;background:#000;display:none;z-index:25}
+#veil.on{display:block}
 </style>
 </head>
 <body>
@@ -112,179 +132,181 @@ p.sub{margin:0 0 12px;font-size:14px;opacity:.8}
   <header><button id="back" aria-label="返回">‹</button><div class="ttl"><b id="hTitle"></b><small id="hSub">课后练习</small></div><img src="img/lulu_happy.svg" alt=""></header>
   <nav id="steps"></nav>
   <main id="home"></main>
-  <main id="s-story"></main>
   <main id="s-song"></main>
-  <main id="s-say"></main>
-  <main id="s-task"></main>
+  <main id="s-words"></main>
+  <main id="s-game"></main>
   <main id="s-done"></main>
+  <main id="s-story"></main>
   <footer id="bar"><button id="prevStep">上一步</button><button id="nextStep">下一步</button></footer>
 </div>
+<div id="veil"></div>
 <div id="zoom"><img alt=""><span>点一下回去</span></div>
 <script>
 'use strict';
-const D = {"u": 1, "title": "We Are Happy", "storyName": "We Are Happy", "g": "audio/g_", "lessons": [{"zh": "故事 · 儿歌 · 动作", "hw": ["听绘本音频，跟唱 If you’re happy and you know it。", "边说边做 4 个动作：clap / stomp / turn around / shout “Hurray!”", "录一段边唱边做动作的小视频发到班级群。"], "say": [{"t": "If you’re happy and you know it, clap your hands.", "a": "audio/s_0_0.mp3"}, {"t": "Stomp your feet.", "a": "audio/s_0_1.mp3"}, {"t": "Turn around.", "a": "audio/s_0_2.mp3"}, {"t": "Shout hurray!", "a": "audio/s_0_3.mp3"}]}, {"zh": "礼物对话 · 四种情绪", "hw": ["每天问一次 How do you feel today? 用 I feel happy / sad / angry / scared 回答。", "唱 Are you happy? Yes, I am.（两只老虎的调子）", "和家人玩礼物对话：This is for you. – Thank you. I like it."], "say": [{"t": "How do you feel today?", "a": "audio/s_1_0.mp3"}, {"t": "I feel happy.", "a": "audio/s_1_1.mp3"}, {"t": "This is for you.", "a": "audio/s_1_2.mp3"}, {"t": "Thank you. I like it.", "a": "audio/s_1_3.mp3"}]}, {"zh": "作业纸 3–4 · 安静书 · 手工", "hw": ["转一转表情纸杯，说 I’m happy / sad / angry / scared today.", "把 4 张作业纸讲给家人听：Who is happy? Who is sad?", "翻安静书找影子：The girl feels happy. I clap my hands."], "say": [{"t": "I’m happy today.", "a": "audio/s_2_0.mp3"}, {"t": "Who is happy?", "a": "audio/s_2_1.mp3"}, {"t": "The girl feels happy.", "a": "audio/s_2_2.mp3"}, {"t": "I clap my hands.", "a": "audio/s_2_3.mp3"}]}], "story": {"audio": "audio/story.mp3", "pages": [["img/book0.webp", [6.5, 16.4]], ["img/book2.webp", [19.8, 28.4]], ["img/book3.webp", [29.8, 36.9]], ["img/book4.webp", [42.8, 53.0]], ["img/book5.webp", [54.3, 63.0]], ["img/book6.webp", [68.7, 79.7]], ["img/book7.webp", [81.3, 91.2]], ["img/book8.webp", [91.7, 104.4]], ["img/book9.webp", [105.1, 118.5]]]}, "song": {"read": "audio/read.mp3", "song": "audio/song.mp3", "pages": [["img/sb0.webp", [1.0, 4.6]], ["img/sb1.webp", [8.0, 14.8]], ["img/sb2.webp", [14.8, 21.4]], ["img/sb3.webp", [24.7, 31.1]], ["img/sb4.webp", [31.2, 38.0]], ["img/sb5.webp", [41.3, 48.0]], ["img/sb6.webp", [48.2, 54.9]], ["img/sb7.webp", [58.1, 65.4]], ["img/sb8.webp", [65.3, 72.5]], ["img/sb9.webp", null]]}};
+const D = {"u": 1, "title": "We Are Happy", "storyName": "We Are Happy", "g": "audio/g_", "video": "video/song.mp4", "poster": "img/poster.jpg", "words": [{"t": "happy", "e": "😀", "a": "audio/w_0.mp3"}, {"t": "clap", "e": "👏", "a": "audio/w_1.mp3"}, {"t": "stomp", "e": "🦶", "a": "audio/w_2.mp3"}, {"t": "turn around", "e": "🔄", "a": "audio/w_3.mp3"}, {"t": "sad", "e": "😢", "a": "audio/w_4.mp3"}, {"t": "angry", "e": "😠", "a": "audio/w_5.mp3"}, {"t": "sleepy", "e": "😴", "a": "audio/w_6.mp3"}, {"t": "hello", "e": "👋", "a": "audio/w_7.mp3"}], "lessons": [{"w": [0, 1, 2, 3]}, {"w": [4, 5, 6, 7]}, {"w": [0, 2, 5, 7]}], "story": {"audio": "audio/story.mp3", "pages": [["img/book0.webp", [6.5, 16.4]], ["img/book2.webp", [19.8, 28.4]], ["img/book3.webp", [29.8, 36.9]], ["img/book4.webp", [42.8, 53.0]], ["img/book5.webp", [54.3, 63.0]], ["img/book6.webp", [68.7, 79.7]], ["img/book7.webp", [81.3, 91.2]], ["img/book8.webp", [91.7, 104.4]], ["img/book9.webp", [105.1, 118.5]]]}};
 const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => [...(r || document).querySelectorAll(s)];
 const Q = new URLSearchParams(location.search);
 const NAME = (Q.get('name') || '').trim().slice(0, 20);
-const SK = 'rr-hw-v1:u' + D.u + ':' + (Q.get('key') || 'preview');
+const SK = 'rr-hw-v2:u' + D.u + ':' + (Q.get('key') || 'preview');
 const IC = {
   play: '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',
   prev: '<svg viewBox="0 0 24 24"><path d="M16 4L6 12l10 8z"/></svg>', next: '<svg viewBox="0 0 24 24"><path d="M8 4l10 8-10 8z"/></svg>',
-  ear: '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM15.5 8.5a5 5 0 010 7l1.4 1.4a7 7 0 000-9.8z"/></svg>',
-  mic: '<svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 003.5-3.5v-5a3.5 3.5 0 00-7 0v5A3.5 3.5 0 0012 15zm6-3.5a6 6 0 01-12 0H4.5a7.5 7.5 0 006.5 7.4V22h2v-3.1a7.5 7.5 0 006.5-7.4z"/></svg>',
-  stop: '<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>', check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
-  book: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5.5C6.5 4.6 9 4.8 11 6v13c-2-1.2-4.5-1.4-7-.5zM20 5.5c-2.5-.9-5-.7-7 .5v13c2-1.2 4.5-1.4 7-.5z"/></svg>',
-  note: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4v10.2A3.2 3.2 0 1011 17V8h6V4z"/></svg>',
-  home: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l9 8h-2.5v9h-5v-6h-3v6h-5v-9H3z"/></svg>'
+  ear: '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM15.5 8.5a5 5 0 010 7l1.4 1.4a7 7 0 000-9.8z"/></svg>'
 };
-const STEPS = [['story', '听故事', IC.book], ['song', '唱儿歌', IC.note], ['say', '跟我说', IC.mic.replace('<svg', '<svg fill="currentColor"')], ['task', '亲子任务', IC.home]];
-const blank = () => ({ story: 0, song: 0, heard: [0, 0, 0, 0], said: [0, 0, 0, 0], tasks: [0, 0, 0] });
-let S = { lesson: -1, L: [blank(), blank(), blank()] };
+const STEPS = [['song', '唱一唱', '🎵'], ['words', '听一听', '👂'], ['game', '找一找', '👆']];
+const SPEEDS = [[0.5, '慢'], [0.75, '稍慢'], [1, '正常']];
+const blank = () => ({ song: 0, heard: [0, 0, 0, 0], game: 0 });
+let S = { lesson: -1, story: 0, L: [blank(), blank(), blank()] };
 try { const o = JSON.parse(localStorage.getItem(SK) || 'null'); if (o && o.L && o.L.length === 3) S = o; } catch (e) {}
 const save = () => { try { localStorage.setItem(SK, JSON.stringify(S)); } catch (e) {} };
 const T0 = Date.now();
-let view = 'home', mic = null, micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder), recs = {}, sentDone = false;
+let view = 'home', sentDone = false, rate = 1;
 const cur = () => S.L[S.lesson];
-const sayDone = l => l.said.every(x => x);
-const stepOK = (l, k) => k === 'story' ? l.story === 2 : k === 'song' ? l.song === 2 : k === 'say' ? sayDone(l) : l.tasks.every(x => x);
+const words = l => D.lessons[l].w.map(i => D.words[i]);
+const stepOK = (l, k) => k === 'song' ? l.song === 2 : k === 'words' ? l.heard.every(x => x) : l.game === 1;
 const count = l => STEPS.filter(s => stepOK(l, s[0])).length;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pic = w => `<span class="emo" style="font-size:${w.s || 1}em">${w.e}</span>`;
 
-/* ---- audio: one voice player for prompts and sentences, one media player for books ---- */
-const voice = new Audio(), media = new Audio(); let book = null;
-function say(src, onend) { media.pause(); voice.pause(); voice.onended = onend || null; voice.src = src; voice.play().catch(() => {}); }
-const prompt = i => say(D.g + i + '.mp3');
-function quiet() { voice.pause(); media.pause(); stopRec(); }
+/* ---- sound ---- */
+const voice = new Audio(), media = new Audio(); let vid = null, timers = [];
+function say(src, onend) { voice.pause(); voice.onended = onend || null; voice.src = src; voice.play().catch(() => {}); }
+const prompt = (k, onend) => say(D.g + k + '.mp3', onend);
+const later = (f, ms) => timers.push(setTimeout(f, ms));
+function quiet() { timers.forEach(clearTimeout); timers = []; voice.pause(); voice.onended = null; media.pause(); if (vid) vid.pause(); }
+const speedBar = id => `<div class="speed" id="${id}"><span>速度</span>${SPEEDS.map(s => `<button data-r="${s[0]}" class="${s[0] === rate ? 'on' : ''}">${s[0]}×<small>${s[1]}</small></button>`).join('')}</div>`;
+function wireSpeed(id, el) { $$('#' + id + ' button').forEach(b => b.onclick = () => { rate = +b.dataset.r; el.playbackRate = rate; $$('.speed button').forEach(x => x.classList.toggle('on', +x.dataset.r === rate)); }); }
 
-/* ---- picture book player ---- */
-function Book(root, pages, opts) {
-  let pi = 0, src = '', timed = true;
-  root.innerHTML = (opts.modes ? `<div class="modes">${opts.modes.map((m, i) => `<button data-m="${i}" class="${i ? '' : 'on'}">${m.label}</button>`).join('')}</div>` : '') +
-    `<div class="spread"><img alt=""><span class="zoomhint">点图片放大</span></div><div class="dots">${pages.map(() => '<i></i>').join('')}</div>
-     <div class="ctl"><button class="sm b-prev" aria-label="上一页">${IC.prev}</button><button class="big b-play" aria-label="播放">${IC.play}</button><button class="sm b-next" aria-label="下一页">${IC.next}</button></div>
-     <div class="prog"><b></b></div>`;
-  const img = $('.spread img', root), bp = $('.b-play', root), bar = $('.prog b', root);
-  const show = i => { pi = Math.max(0, Math.min(pages.length - 1, i)); img.src = pages[pi][0]; $$('.dots i', root).forEach((d, n) => d.classList.toggle('on', n === pi)); };
-  const setSrc = (s, t) => { src = s; timed = t; if (book === api) { media.pause(); media.src = s; bar.style.width = '0'; bp.innerHTML = IC.play; } };
-  const api = {
-    time() { if (!media.duration) return; bar.style.width = (media.currentTime / media.duration * 100) + '%'; if (media.currentTime > 4) opts.mark(1);
-      if (timed) { let k = pi; pages.forEach((p, n) => { if (p[1] && media.currentTime >= p[1][0] - .15) k = n; }); if (k !== pi) show(k); } },
-    ended() { bp.innerHTML = IC.play; opts.mark(2); }, playing(on) { bp.innerHTML = on ? IC.pause : IC.play; },
-    enter() { book = api; media.pause(); media.src = src; bar.style.width = '0'; bp.innerHTML = IC.play; show(0); }
-  };
-  bp.onclick = () => { voice.pause(); if (media.paused) media.play().catch(() => {}); else media.pause(); };
-  const turn = d => { show(pi + d); if (timed && pages[pi][1] && media.src) { try { media.currentTime = pages[pi][1][0]; } catch (e) {} } };
-  $('.b-prev', root).onclick = () => turn(-1); $('.b-next', root).onclick = () => turn(1);
-  $('.spread', root).onclick = () => zoom(img.src);
-  if (opts.modes) $$('.modes button', root).forEach(b => b.onclick = () => { $$('.modes button', root).forEach(x => x.classList.toggle('on', x === b)); const m = opts.modes[+b.dataset.m]; setSrc(m.src, m.timed); show(0); });
-  setSrc(opts.modes ? opts.modes[0].src : opts.src, true);
-  return api;
+/* ---- step 1: song video ---- */
+function buildSong() {
+  $('#s-song').innerHTML = `<h2>Sing along</h2><p class="sub">点粉色按钮看视频，跟着唱、跟着做动作。太快了就选“慢”。</p>
+    <div class="vbox" id="vbox"><video playsinline webkit-playsinline preload="metadata" src="${D.video}" poster="${D.poster}"></video><button class="vplay" aria-label="播放">${IC.play}</button><button class="vbig">放大</button></div>
+    <div class="prog"><b></b></div>${speedBar('spSong')}<p class="note">给家长：零基础的孩子先用 0.5× 或 0.75× 看一两遍，会哼了再用 1×。听不懂没关系，跟着动起来就好。</p>`;
+  vid = $('#s-song video'); const box = $('#vbox'), bar = $('#s-song .prog b');
+  const toggle = () => { voice.pause(); if (vid.paused) { vid.playbackRate = rate; vid.play().catch(() => {}); } else vid.pause(); };
+  $('.vplay', box).onclick = e => { e.stopPropagation(); toggle(); };
+  vid.onclick = toggle;
+  vid.onplay = () => box.classList.add('playing'); vid.onpause = () => box.classList.remove('playing');
+  vid.ontimeupdate = () => { if (!vid.duration) return; bar.style.width = (vid.currentTime / vid.duration * 100) + '%'; if (vid.currentTime > 5) mark('song', 1); if (vid.currentTime > vid.duration * .9) mark('song', 2); };
+  vid.onended = () => { mark('song', 2); unfull(); };
+  vid.onratechange = () => { if (vid.playbackRate !== rate) vid.playbackRate = rate; };
+  $('.vbig', box).onclick = e => { e.stopPropagation(); box.classList.contains('full') ? unfull() : full(); };
+  $('#veil').onclick = unfull; wireSpeed('spSong', vid);
 }
-media.addEventListener('timeupdate', () => book && book.time());
-media.addEventListener('ended', () => book && book.ended());
-media.addEventListener('play', () => book && book.playing(true));
-media.addEventListener('pause', () => book && book.playing(false));
+/* "full screen" without the fullscreen API: the video lies on its side and fills the phone */
+function full() { const box = $('#vbox'), W = innerWidth, H = innerHeight, rot = H > W; box.classList.add('full'); $('#veil').classList.add('on');
+  box.style.width = (rot ? H : W) + 'px'; box.style.height = (rot ? W : H) + 'px'; box.style.transform = 'translate(-50%,-50%)' + (rot ? ' rotate(90deg)' : ''); $('.vbig', box).textContent = '缩小'; }
+function unfull() { const box = $('#vbox'); if (!box) return; box.classList.remove('full'); $('#veil').classList.remove('on'); box.style.width = box.style.height = box.style.transform = ''; $('.vbig', box).textContent = '放大'; }
 
-/* ---- zoom: the spread fills the phone by lying on its side ---- */
+/* ---- step 2: picture words ---- */
+function paintWords() {
+  const l = cur(), ws = words(S.lesson);
+  $('#s-words').innerHTML = `<h2>Listen and say</h2><p class="sub">点图片听一听，跟着说一遍。四张都点到就有星星。</p><div class="grid">` +
+    ws.map((w, i) => `<button class="wcard${l.heard[i] ? ' heard' : ''}" data-i="${i}"><span class="pic">${pic(w)}</span><b>${esc(w.t)}</b></button>`).join('') + `</div>`;
+  $$('#s-words .wcard').forEach(b => b.onclick = () => { const i = +b.dataset.i; quiet(); b.classList.remove('say'); void b.offsetWidth; b.classList.add('say', 'heard'); say(ws[i].a, () => later(() => say(ws[i].a), 500));
+    if (!l.heard[i]) { l.heard[i] = 1; save(); paintSteps(); after(); } });
+}
+
+/* ---- step 3: listen and find ---- */
+let G = null;
+function startGame() { const ws = words(S.lesson), order = [0, 1, 2, 3].sort(() => Math.random() - .5); G = { order, r: 0, n: S.lesson === 2 ? 3 : 2, lock: false, ws }; round(true); }
+function round(first) {
+  const g = G, t = g.ws[g.order[g.r]];
+  const same = (x, y) => x.e === y.e && (x.s || 1) === (y.s || 1);
+  const pool = D.words.filter(w => !same(w, t)).sort(() => Math.random() - .5).sort((x, y) => (y.e === t.e) - (x.e === t.e));
+  const others = []; pool.forEach(w => { if (others.length < g.n - 1 && !others.some(o => same(o, w))) others.push(w); });
+  const opts = [t, ...others].sort(() => Math.random() - .5); g.lock = false;
+  $('#s-game').innerHTML = `<h2>Listen and find</h2><p class="sub">听一听，点对的图片。点喇叭可以再听一遍。</p><div class="rounds">${g.order.map((_, i) => `<i class="${i < g.r ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="ask"><button aria-label="再听一遍">${IC.ear}</button></div><div class="choices n${g.n}">${opts.map((w, i) => `<button class="pick" data-ok="${w === t ? 1 : 0}">${pic(w)}</button>`).join('')}</div><div class="cheer emo"></div>`;
+  const hear = () => say(t.a);
+  $('#s-game .ask button').onclick = hear;
+  $$('#s-game .pick').forEach(b => b.onclick = () => { if (g.lock) return;
+    if (b.dataset.ok === '1') { g.lock = true; b.classList.add('yes'); $('#s-game .cheer').textContent = '🌟'; prompt('x3', () => later(() => { g.r++; if (g.r >= g.order.length) { cur().game = 1; save(); paintSteps(); after(); go('done'); } else round(); }, 350)); }
+    else { b.classList.remove('no'); void b.offsetWidth; b.classList.add('no'); later(hear, 350); } });
+  if (first) prompt('x2', () => later(hear, 300)); else later(hear, 250);
+}
+
+/* ---- bonus: story with pictures ---- */
+let pi = 0;
+function buildStory() {
+  const P = D.story.pages;
+  $('#s-story').innerHTML = `<h2>${esc(D.storyName)}</h2><p class="sub">选做：睡前听一听故事，图片会自己翻页。</p><div class="spread"><img alt=""><span class="zoomhint">点图片放大</span></div><div class="dots">${P.map(() => '<i></i>').join('')}</div>
+    <div class="ctl"><button class="sm b-prev" aria-label="上一页">${IC.prev}</button><button class="big b-play" aria-label="播放">${IC.play}</button><button class="sm b-next" aria-label="下一页">${IC.next}</button></div><div class="prog"><b></b></div>${speedBar('spStory')}`;
+  const img = $('#s-story .spread img'), bp = $('#s-story .b-play'), bar = $('#s-story .prog b');
+  const show = i => { pi = Math.max(0, Math.min(P.length - 1, i)); img.src = P[pi][0]; $$('#s-story .dots i').forEach((d, n) => d.classList.toggle('on', n === pi)); };
+  media.src = D.story.audio; show(0);
+  bp.onclick = () => { voice.pause(); if (media.paused) { media.playbackRate = rate; media.play().catch(() => {}); } else media.pause(); };
+  media.onplay = () => bp.innerHTML = IC.pause; media.onpause = () => bp.innerHTML = IC.play;
+  media.ontimeupdate = () => { if (!media.duration) return; bar.style.width = (media.currentTime / media.duration * 100) + '%'; if (media.currentTime > 5 && S.story < 1) { S.story = 1; save(); }
+    let k = pi; P.forEach((p, n) => { if (p[1] && media.currentTime >= p[1][0] - .15) k = n; }); if (k !== pi) show(k); };
+  media.onended = () => { S.story = 2; save(); };
+  const turn = d => { show(pi + d); if (P[pi][1]) { try { media.currentTime = P[pi][1][0]; } catch (e) {} } };
+  $('#s-story .b-prev').onclick = () => turn(-1); $('#s-story .b-next').onclick = () => turn(1);
+  $('#s-story .spread').onclick = () => zoom(img.src); wireSpeed('spStory', media);
+}
 function zoom(src) {
   const z = $('#zoom'), im = $('img', z); im.src = src;
   const fit = () => { const W = innerWidth, H = innerHeight, r = (im.naturalWidth || 2) / (im.naturalHeight || 1), rot = H > W && r > 1.1;
-    const bw = rot ? H : W, bh = rot ? W : H, w = Math.min(bw, bh * r); im.style.width = w + 'px'; im.style.height = (w / r) + 'px';
-    im.style.transform = 'translate(-50%,-50%)' + (rot ? ' rotate(90deg)' : ''); };
+    const bw = rot ? H : W, bh = rot ? W : H, w = Math.min(bw, bh * r); im.style.width = w + 'px'; im.style.height = (w / r) + 'px'; im.style.transform = 'translate(-50%,-50%)' + (rot ? ' rotate(90deg)' : ''); };
   im.onload = fit; fit(); z.classList.add('on');
 }
 $('#zoom').onclick = () => $('#zoom').classList.remove('on');
 
-/* ---- recording ---- */
-let recorder = null, recIdx = -1, recTimer = 0;
-function stopRec() { clearTimeout(recTimer); if (recorder && recorder.state !== 'inactive') { try { recorder.stop(); } catch (e) {} if (recIdx >= 0 && view === 'say') { recIdx = -1; paintSay(); } } }
-async function startRec(i) {
-  quiet();
-  try {
-    if (!mic) mic = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const chunks = []; recorder = new MediaRecorder(mic); recIdx = i;
-    recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
-    recorder.onstop = () => { const k = S.lesson + ':' + i; if (recs[k]) URL.revokeObjectURL(recs[k]); recs[k] = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
-      cur().said[i] = 1; save(); recIdx = -1; if (view === 'say') { paintSay(); prompt(5 + i % 3); } after(); };
-    recorder.start(); recTimer = setTimeout(stopRec, 8000); if (view === 'say') paintSay();
-  } catch (e) { micOK = false; mic = null; paintSay(); }
-}
-
 /* ---- views ---- */
 function go(v) {
-  quiet(); view = v; $$('main').forEach(m => m.classList.toggle('on', m.id === (v === 'home' ? 'home' : 's-' + v)));
-  const inL = v !== 'home'; $('#steps').classList.toggle('on', inL); $('#bar').classList.toggle('on', inL); $('#back').classList.toggle('on', inL);
-  $('#hSub').textContent = inL ? 'Lesson ' + (S.lesson + 1) + ' · 课后练习' : '课后练习';
-  if (v === 'home') paintHome(); else { paintSteps(); $('#nextStep').textContent = v === 'done' ? '回到首页' : v === 'task' ? '做完啦' : '下一步'; $('#prevStep').style.visibility = v === 'story' ? 'hidden' : 'visible'; $('main.on').scrollTop = 0; }
-  if (v === 'story') { bookStory.enter(); prompt(1); }
-  if (v === 'song') { bookSong.enter(); prompt(2); }
-  if (v === 'say') { paintSay(); prompt(3); }
-  if (v === 'task') { paintTask(); prompt(8); }
-  if (v === 'done') { paintDone(); if (count(cur()) === 4) prompt(9); }
+  quiet(); unfull(); view = v; $$('main').forEach(m => m.classList.toggle('on', m.id === (v === 'home' ? 'home' : 's-' + v)));
+  const inL = v !== 'home' && v !== 'story'; $('#steps').classList.toggle('on', inL); $('#bar').classList.toggle('on', inL); $('#back').classList.toggle('on', v !== 'home');
+  $('#hSub').textContent = inL ? 'Lesson ' + (S.lesson + 1) + ' · 课后练习' : v === 'story' ? '听故事（选做）' : '课后练习';
+  if (v === 'home') paintHome(); else if (inL) { paintSteps(); $('#nextStep').textContent = v === 'done' ? '回到首页' : v === 'game' ? '做完啦' : '下一步'; $('#prevStep').style.visibility = v === 'song' ? 'hidden' : 'visible'; }
+  $('main.on').scrollTop = 0;
+  if (v === 'song') prompt('x0');
+  if (v === 'words') { paintWords(); prompt('x1'); }
+  if (v === 'game') startGame();
+  if (v === 'done') { paintDone(); if (count(cur()) === 3) prompt(9); }
+  if (v === 'story') buildStory();
 }
 function paintHome() {
   $('#home').innerHTML = `<div class="hello"><img src="img/lulu_hooray.svg" alt=""><div><b>${NAME ? 'Hi, ' + esc(NAME) + '!' : 'Hi!'}</b>今天上的是哪一节课？点一下开始。</div></div>` +
-    D.lessons.map((L, i) => `<button class="lcard" data-l="${i}"><span class="num">${i + 1}</span><span class="tx"><b>Lesson ${i + 1}</b><small>${esc(L.zh)}</small><span class="stars">${STEPS.map(s => `<i class="${stepOK(S.L[i], s[0]) ? 'on' : ''}"></i>`).join('')}</span></span></button>`).join('') +
-    `<div class="tipbox">给家长：每次练习大约十分钟，分四步：听故事、唱儿歌、跟我说、亲子任务。请陪孩子一起做，做完后点练习框外面的「完成，交给老师」按钮（手机上在练习框下面）。</div>`;
-  $$('#home .lcard').forEach(b => b.onclick = () => { S.lesson = +b.dataset.l; save(); const first = STEPS.find(s => !stepOK(cur(), s[0])); go(first ? first[0] : 'done'); if (first && first[0] === 'story') prompt(0); });
+    D.lessons.map((L, i) => `<button class="lcard" data-l="${i}"><span class="num">${i + 1}</span><span class="tx"><b>Lesson ${i + 1}</b><span class="emo">${words(i).map(w => w.e).join(' ')}</span><span class="stars">${STEPS.map(s => `<i class="${stepOK(S.L[i], s[0]) ? 'on' : ''}"></i>`).join('')}</span></span></button>`).join('') +
+    `<button class="bonus" id="toStory"><span class="emo">📖</span><span><b>听故事（选做）</b><br>${esc(D.storyName)}</span></button>` +
+    `<div class="tipbox">给家长：这是给零基础小朋友的练习，每次五分钟左右，一共三步：看视频唱儿歌、点图片听单词、听一听点图片。不用认字，也不用会说整句。做完后点练习框外面的「完成，交给老师」按钮（手机上在练习框下面）。</div>`;
+  $$('#home .lcard').forEach(b => b.onclick = () => { S.lesson = +b.dataset.l; save(); const first = STEPS.find(s => !stepOK(cur(), s[0])); go(first ? first[0] : 'done'); });
+  $('#toStory').onclick = () => go('story');
 }
-function paintSteps() { $('#steps').innerHTML = STEPS.map(s => `<button data-s="${s[0]}" class="${view === s[0] ? 'cur' : ''}${stepOK(cur(), s[0]) ? ' ok' : ''}">${s[2]}${s[1]}</button>`).join(''); $$('#steps button').forEach(b => b.onclick = () => go(b.dataset.s)); }
-function paintSay() {
-  const l = cur(), L = D.lessons[S.lesson];
-  $('#s-say').innerHTML = `<h2>Say it with me</h2><p class="sub">先点“听一听”，再${micOK ? '点“我来说”录下自己的声音' : '大声说一遍，说完点“我说了”'}。</p>` + L.say.map((s, i) => {
-    const has = recs[S.lesson + ':' + i], rec = recIdx === i;
-    return `<div class="say${has ? ' has' : ''}${l.said[i] ? ' done' : ''}"><div class="en">${esc(s.t)}</div><div class="row"><button class="b-hear" data-i="${i}">${IC.ear}听一听</button>` +
-      (micOK ? `<button class="b-rec${rec ? ' rec' : ''}" data-i="${i}">${rec ? IC.stop + '说完了' : IC.mic + (l.said[i] ? '再说一次' : '我来说')}</button><button class="b-mine" data-i="${i}">${IC.play}我的声音</button>`
-             : `<button class="b-rec${l.said[i] ? ' ok' : ''}" data-i="${i}">${l.said[i] ? '说过了' : '我说了'}</button>`) + `</div></div>`; }).join('') +
-    (micOK ? `<p class="note">录音只留在这台手机上，方便孩子听听自己的声音，不会上传。</p>` : `<p class="note">这台手机现在不能录音，听完大声跟读就可以。</p>`);
-  $$('#s-say .b-hear').forEach(b => b.onclick = () => { stopRec(); const i = +b.dataset.i; cur().heard[i] = 1; save(); say(L.say[i].a); });
-  $$('#s-say .b-rec').forEach(b => b.onclick = () => { const i = +b.dataset.i; if (!micOK) { cur().said[i] = cur().said[i] ? 0 : 1; save(); paintSay(); paintSteps(); after(); return; } if (recIdx === i) stopRec(); else startRec(i); });
-  $$('#s-say .b-mine').forEach(b => b.onclick = () => { stopRec(); say(recs[S.lesson + ':' + b.dataset.i]); });
-  paintSteps();
-}
-function paintTask() {
-  const l = cur(), L = D.lessons[S.lesson];
-  $('#s-task').innerHTML = `<h2>With my family</h2><p class="sub">和爸爸妈妈一起做，做完一项就点一下。</p>` + L.hw.map((h, i) => `<button class="task${l.tasks[i] ? ' on' : ''}" data-i="${i}"><span class="box">${IC.check}</span><span>${esc(h)}</span></button>`).join('');
-  $$('#s-task .task').forEach(b => b.onclick = () => { const i = +b.dataset.i; l.tasks[i] = l.tasks[i] ? 0 : 1; save(); paintTask(); paintSteps(); after(); });
-}
+function paintSteps() { $('#steps').innerHTML = STEPS.map(s => `<button data-s="${s[0]}" class="${view === s[0] ? 'cur' : ''}${stepOK(cur(), s[0]) ? ' ok' : ''}"><span class="emo">${s[2]}</span>${s[1]}</button>`).join(''); $$('#steps button').forEach(b => b.onclick = () => go(b.dataset.s)); }
 function paintDone() {
-  const l = cur(), all = count(l) === 4;
-  $('#s-done').innerHTML = `<div class="fin"><img src="img/lulu_hooray.svg" alt=""><h2>${all ? 'Well done!' : 'Good try!'}</h2><p class="sub">${all ? '今天的四个练习都做完了。' : '还有没做完的练习，可以现在补上，也可以先交。'}</p>
+  const l = cur(), all = count(l) === 3;
+  $('#s-done').innerHTML = `<div class="fin"><img src="img/lulu_hooray.svg" alt=""><h2>${all ? 'Well done!' : 'Good try!'}</h2><p class="sub">${all ? '今天的三个练习都做完了。' : '还有没做完的练习，可以现在补上，也可以先交。'}</p>
     <div class="sum">${STEPS.map(s => `<div><i class="${stepOK(l, s[0]) ? 'on' : ''}"></i>${s[1]}${stepOK(l, s[0]) ? '' : `<button data-s="${s[0]}">去完成</button>`}</div>`).join('')}</div>
-    <div class="tipbox">交作业：点练习框外面的「完成，交给老师」按钮（手机上往下滑就能看到），老师就能看到今天做了什么。</div></div>`;
+    <div class="tipbox">和爸爸妈妈再唱一遍 ${esc(D.title)}，边唱边做动作。<br>交作业：点练习框外面的「完成，交给老师」按钮（手机上往下滑就能看到）。</div></div>`;
   $$('#s-done .sum button').forEach(b => b.onclick = () => go(b.dataset.s));
 }
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const mark = k => v => { const l = cur(); if (l && l[k] < v) { l[k] = v; save(); paintSteps(); after(); } };
-const bookStory = Book($('#s-story'), D.story.pages, { src: D.story.audio, mark: mark('story') });
-$('#s-story').insertAdjacentHTML('afterbegin', `<h2>${esc(D.storyName)}</h2><p class="sub">点粉色按钮听故事，图片会自己翻页。</p>`);
-const bookSong = Book($('#s-song'), D.song.pages, { modes: [{ label: '慢慢读', src: D.song.read, timed: true }, { label: '跟着唱', src: D.song.song, timed: false }], mark: mark('song') });
-$('#s-song').insertAdjacentHTML('afterbegin', `<h2>${esc(D.title)}</h2><p class="sub">先“慢慢读”一遍，再“跟着唱”，边唱边做动作。唱的时候用两边的按钮翻页。</p>`);
+function mark(k, v) { const l = cur(); if (l && l[k] < v) { l[k] = v; save(); paintSteps(); after(); } }
 $('#hTitle').textContent = D.title;
 $('#back').onclick = () => go('home');
-const ORDER = ['story', 'song', 'say', 'task', 'done'];
-$('#nextStep').onclick = () => { const i = ORDER.indexOf(view); go(i === 4 ? 'home' : ORDER[i + 1]); };
+const ORDER = ['song', 'words', 'game', 'done'];
+$('#nextStep').onclick = () => { const i = ORDER.indexOf(view); go(i === 3 ? 'home' : ORDER[i + 1]); };
 $('#prevStep').onclick = () => { const i = ORDER.indexOf(view); if (i > 0) go(ORDER[i - 1]); };
+buildSong();
 
 /* ---- Wonder English: hand the work back to the teacher ---- */
 function describe(i) {
-  const l = S.L[i], L = D.lessons[i], st = ['还没听', '听了一部分', '听完了'];
-  const said = L.say.filter((s, n) => l.said[n]).map(s => s.t), tasks = L.hw.filter((h, n) => l.tasks[n]);
-  return [`Lesson ${i + 1}（${L.zh}）`, `听故事《${D.storyName}》：${st[l.story]}`, `唱儿歌 ${D.title}：${st[l.song]}`,
-    said.length ? `跟我说，跟读了这些句子：${said.join(' / ')}` : '跟我说：还没跟读', tasks.length ? '亲子任务，做了：\n' + tasks.map(t => '  · ' + t).join('\n') : '亲子任务：还没做'].join('\n');
+  const l = S.L[i], st = ['还没看', '看了一部分', '看完了'], heard = words(i).filter((w, n) => l.heard[n]).map(w => w.t);
+  return [`Lesson ${i + 1}`, `看视频唱儿歌 ${D.title}：${st[l.song]}`, heard.length ? `听单词，点着听了：${heard.join('、')}` : '听单词：还没听', `找一找（听单词点图片）：${l.game ? '玩完了' : '还没玩完'}`].join('\n');
 }
 function collect() {
-  const used = [0, 1, 2].filter(i => i === S.lesson || count(S.L[i]) || S.L[i].story || S.L[i].song || S.L[i].said.some(x => x) || S.L[i].tasks.some(x => x));
   if (S.lesson < 0) return { text: `彩虹兔童谣课后练习 · ${D.title}\n还没有开始练习。`, missing: ['还没有选今天上的是哪一节课'] };
-  const l = cur(), missing = [];
-  if (l.story < 2) missing.push('故事还没听完'); if (l.song < 2) missing.push('儿歌还没唱完'); if (!sayDone(l)) missing.push('还有句子没跟读'); if (!l.tasks.every(x => x)) missing.push('亲子任务还没勾完');
-  return { text: (`彩虹兔童谣课后练习 · ${D.title}\n` + used.map(describe).join('\n\n')).slice(0, 19000), missing };
+  const used = [0, 1, 2].filter(i => i === S.lesson || S.L[i].song || S.L[i].game || S.L[i].heard.some(x => x)), l = cur(), missing = [];
+  if (l.song < 2) missing.push('儿歌视频还没看完'); if (!l.heard.every(x => x)) missing.push('还有单词没点着听'); if (!l.game) missing.push('找一找还没玩完');
+  const story = S.story ? `\n\n选做 · 听故事《${D.storyName}》：${S.story === 2 ? '听完了' : '听了一部分'}` : '';
+  return { text: (`彩虹兔童谣课后练习 · ${D.title}\n` + used.map(describe).join('\n\n') + story).slice(0, 19000), missing };
 }
 function after() {
-  if (S.lesson >= 0 && count(cur()) === 4 && !sentDone) { sentDone = true; try { parent.postMessage({ type: 'we:complete', summary: `Lesson ${S.lesson + 1} 的四个练习都做完了` }, location.origin); } catch (e) {} }
-  try { if (parent !== window) parent.postMessage({ type: 'we:progress', page: S.lesson < 0 ? 0 : count(cur()), total: 4, seconds: Math.round((Date.now() - T0) / 1000), words: [] }, location.origin); } catch (e) {}
+  if (S.lesson >= 0 && count(cur()) === 3 && !sentDone) { sentDone = true; try { parent.postMessage({ type: 'we:complete', summary: `Lesson ${S.lesson + 1} 的三个练习都做完了` }, location.origin); } catch (e) {} }
+  try { if (parent !== window) parent.postMessage({ type: 'we:progress', page: S.lesson < 0 ? 0 : count(cur()), total: 3, seconds: Math.round((Date.now() - T0) / 1000), words: [] }, location.origin); } catch (e) {}
 }
 window.weActivity = { collect, show() { if (S.lesson < 0) return go('home'); const first = STEPS.find(s => !stepOK(cur(), s[0])); go(first ? first[0] : 'done'); } };
-addEventListener('pagehide', () => { quiet(); if (mic) mic.getTracks().forEach(t => t.stop()); });
+addEventListener('pagehide', quiet);
 document.addEventListener('visibilitychange', () => { if (document.hidden) quiet(); });
 go('home');
 </script>
